@@ -22,9 +22,9 @@ using System.Windows.Forms;
 
 namespace CustomFileExplorer
 {
-    public partial class Form1: Form
+    public partial class CustomFileExplorer: Form
     {
-        public Form1()
+        public CustomFileExplorer()
         {
             InitializeComponent();
         }

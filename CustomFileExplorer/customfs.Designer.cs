@@ -1,6 +1,6 @@
 ﻿namespace CustomFileExplorer
 {
-    partial class Form1
+    partial class CustomFileExplorer
     {
         /// <summary>
         /// Required designer variable.
@@ -41,8 +41,8 @@
             this.contextMenuFiles_Paste = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuFiles_Delete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuFiles_Rename = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageListIcons = new System.Windows.Forms.ImageList(this.components);
             this.contextMenuFiles_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageListIcons = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -65,8 +65,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.btnGo);
             this.splitContainer1.Panel2.Controls.Add(this.textBoxPath);
             this.splitContainer1.Panel2.Controls.Add(this.listViewFiles);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
-            this.splitContainer1.SplitterDistance = 215;
+            this.splitContainer1.Size = new System.Drawing.Size(940, 450);
+            this.splitContainer1.SplitterDistance = 252;
             this.splitContainer1.TabIndex = 0;
             // 
             // treeViewDirectories
@@ -74,14 +74,14 @@
             this.treeViewDirectories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewDirectories.Location = new System.Drawing.Point(0, 0);
             this.treeViewDirectories.Name = "treeViewDirectories";
-            this.treeViewDirectories.Size = new System.Drawing.Size(215, 450);
+            this.treeViewDirectories.Size = new System.Drawing.Size(252, 450);
             this.treeViewDirectories.TabIndex = 0;
             this.treeViewDirectories.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewDirectories_BeforeExpand);
             this.treeViewDirectories.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewDirectories_AfterSelect);
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(489, 0);
+            this.btnGo.Location = new System.Drawing.Point(592, 0);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(92, 20);
             this.btnGo.TabIndex = 2;
@@ -94,7 +94,7 @@
             this.textBoxPath.Dock = System.Windows.Forms.DockStyle.Top;
             this.textBoxPath.Location = new System.Drawing.Point(0, 0);
             this.textBoxPath.Name = "textBoxPath";
-            this.textBoxPath.Size = new System.Drawing.Size(581, 20);
+            this.textBoxPath.Size = new System.Drawing.Size(684, 20);
             this.textBoxPath.TabIndex = 1;
             // 
             // listViewFiles
@@ -105,7 +105,7 @@
             this.listViewFiles.LabelEdit = true;
             this.listViewFiles.Location = new System.Drawing.Point(0, 0);
             this.listViewFiles.Name = "listViewFiles";
-            this.listViewFiles.Size = new System.Drawing.Size(581, 450);
+            this.listViewFiles.Size = new System.Drawing.Size(684, 450);
             this.listViewFiles.TabIndex = 0;
             this.listViewFiles.UseCompatibleStateImageBehavior = false;
             this.listViewFiles.View = System.Windows.Forms.View.Details;
@@ -121,50 +121,57 @@
             this.contextMenuFiles_Rename,
             this.contextMenuFiles_NewFolder});
             this.contextMenuFiles.Name = "contextMenuFiles";
-            this.contextMenuFiles.Size = new System.Drawing.Size(181, 180);
+            this.contextMenuFiles.Size = new System.Drawing.Size(135, 158);
             this.contextMenuFiles.TabStop = true;
             // 
             // contextMenuFiles_Open
             // 
             this.contextMenuFiles_Open.Name = "contextMenuFiles_Open";
-            this.contextMenuFiles_Open.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuFiles_Open.Size = new System.Drawing.Size(134, 22);
             this.contextMenuFiles_Open.Text = "Open";
             this.contextMenuFiles_Open.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // contextMenuFiles_Copy
             // 
             this.contextMenuFiles_Copy.Name = "contextMenuFiles_Copy";
-            this.contextMenuFiles_Copy.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuFiles_Copy.Size = new System.Drawing.Size(134, 22);
             this.contextMenuFiles_Copy.Text = "Copy";
             this.contextMenuFiles_Copy.Click += new System.EventHandler(this.contextMenuFiles_Copy_Click);
             // 
             // contextMenuFiles_Cut
             // 
             this.contextMenuFiles_Cut.Name = "contextMenuFiles_Cut";
-            this.contextMenuFiles_Cut.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuFiles_Cut.Size = new System.Drawing.Size(134, 22);
             this.contextMenuFiles_Cut.Text = "Cut";
             this.contextMenuFiles_Cut.Click += new System.EventHandler(this.contextMenuFiles_Cut_Click);
             // 
             // contextMenuFiles_Paste
             // 
             this.contextMenuFiles_Paste.Name = "contextMenuFiles_Paste";
-            this.contextMenuFiles_Paste.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuFiles_Paste.Size = new System.Drawing.Size(134, 22);
             this.contextMenuFiles_Paste.Text = "Paste";
             this.contextMenuFiles_Paste.Click += new System.EventHandler(this.contextMenuFiles_Paste_Click);
             // 
             // contextMenuFiles_Delete
             // 
             this.contextMenuFiles_Delete.Name = "contextMenuFiles_Delete";
-            this.contextMenuFiles_Delete.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuFiles_Delete.Size = new System.Drawing.Size(134, 22);
             this.contextMenuFiles_Delete.Text = "Delete";
             this.contextMenuFiles_Delete.Click += new System.EventHandler(this.contextMenuFiles_Delete_Click);
             // 
             // contextMenuFiles_Rename
             // 
             this.contextMenuFiles_Rename.Name = "contextMenuFiles_Rename";
-            this.contextMenuFiles_Rename.Size = new System.Drawing.Size(180, 22);
+            this.contextMenuFiles_Rename.Size = new System.Drawing.Size(134, 22);
             this.contextMenuFiles_Rename.Text = "Rename";
             this.contextMenuFiles_Rename.Click += new System.EventHandler(this.contextMenuFiles_Rename_Click);
+            // 
+            // contextMenuFiles_NewFolder
+            // 
+            this.contextMenuFiles_NewFolder.Name = "contextMenuFiles_NewFolder";
+            this.contextMenuFiles_NewFolder.Size = new System.Drawing.Size(134, 22);
+            this.contextMenuFiles_NewFolder.Text = "New Folder";
+            this.contextMenuFiles_NewFolder.Click += new System.EventHandler(this.contextMenuFiles_NewFolder_Click);
             // 
             // imageListIcons
             // 
@@ -172,21 +179,14 @@
             this.imageListIcons.ImageSize = new System.Drawing.Size(16, 16);
             this.imageListIcons.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // contextMenuFiles_NewFolder
-            // 
-            this.contextMenuFiles_NewFolder.Name = "contextMenuFiles_NewFolder";
-            this.contextMenuFiles_NewFolder.Size = new System.Drawing.Size(180, 22);
-            this.contextMenuFiles_NewFolder.Text = "New Folder";
-            this.contextMenuFiles_NewFolder.Click += new System.EventHandler(this.contextMenuFiles_NewFolder_Click);
-            // 
-            // Form1
+            // CustomFileExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(940, 450);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "CustomFileExplorer";
+            this.Text = "CustomFileExplorer";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
