@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Compression;
+
 
 
 
@@ -24,6 +26,8 @@ namespace CustomFileExplorer
 {
     public partial class CustomFileExplorer: Form
     {
+
+
         private Stack<string> navigationHistory = new Stack<string>();
         private string currentPath = "";
 
@@ -41,18 +45,28 @@ namespace CustomFileExplorer
             InitializeListView();
         }
 
+
+
+
+
+
+
+        
+        
+        // Icons
         private void LoadIcons()
         {
             imageListIcons.Images.Clear();
 
             Icon folderIcon = ExtractFolderIcon();
             imageListIcons.Images.Add("folder", folderIcon);
-
             imageListIcons.Images.Add("file", SystemIcons.Application);
 
             treeViewDirectories.ImageList = imageListIcons;
-            listViewFiles.SmallImageList = imageListIcons;
+            listViewFiles.SmallImageList = imageListIcons; // For Details mode
+            listViewFiles.LargeImageList = imageListIcons; // For Large Icon mode
         }
+
 
 
         private Icon ExtractFolderIcon()
@@ -67,6 +81,87 @@ namespace CustomFileExplorer
 
             return Icon.FromHandle(shinfo.hIcon);
         }
+
+
+
+
+        // File view
+
+        private void LoadFiles(string path)
+        {
+            if (!string.IsNullOrEmpty(currentPath))
+            {
+                navigationHistory.Push(currentPath); // Store the previous path
+            }
+
+            currentPath = path; // Update current path
+            listViewFiles.Items.Clear();
+
+            try
+            {
+                foreach (var dir in Directory.GetDirectories(path))
+                {
+                    ListViewItem item = new ListViewItem(Path.GetFileName(dir), 0);
+                    item.Tag = dir;
+                    item.SubItems.Add("");
+                    item.SubItems.Add("Folder");
+
+                    int specialIconIndex = GetSpecialFolderIconIndex(dir);
+                    if (specialIconIndex != -1)
+                        item.ImageIndex = specialIconIndex;
+
+                    listViewFiles.Items.Add(item);
+                }
+
+                foreach (var file in Directory.GetFiles(path))
+                {
+                    FileInfo fileInfo = new FileInfo(file);
+                    string ext = fileInfo.Extension.ToLower();
+
+                    int iconIndex = GetFileIconIndex(ext);
+                    ListViewItem item = new ListViewItem(fileInfo.Name, iconIndex);
+                    item.Tag = file;
+                    item.SubItems.Add(fileInfo.Length.ToString("N0") + " bytes");
+                    item.SubItems.Add(fileInfo.Extension.ToUpper() + " File");
+                    listViewFiles.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading files: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                GoBack();
+            }
+        }
+
+        private void GoBack()
+        {
+            if (navigationHistory.Count > 0)
+            {
+                string previousPath = navigationHistory.Pop();
+                textBoxPath.Text = previousPath;
+                LoadFiles(previousPath);
+            }
+            else
+            {
+                MessageBox.Show("No previous directory to go back to.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+
+        private void LoadDrives()
+        {
+            treeViewDirectories.Nodes.Clear();
+            foreach (var drive in DriveInfo.GetDrives())
+            {
+                if (drive.IsReady)
+                {
+                    TreeNode node = new TreeNode(drive.Name, 0, 0) { Tag = drive.Name };
+                    node.Nodes.Add("Loading...");
+                    treeViewDirectories.Nodes.Add(node);
+                }
+            }
+        }
+
 
 
 
@@ -135,22 +230,6 @@ namespace CustomFileExplorer
             }
         }
 
-
-
-        private void LoadDrives()
-        {
-            treeViewDirectories.Nodes.Clear();
-            foreach (var drive in DriveInfo.GetDrives())
-            {
-                if (drive.IsReady)
-                {
-                    TreeNode node = new TreeNode(drive.Name, 0, 0) { Tag = drive.Name };
-                    node.Nodes.Add("Loading...");
-                    treeViewDirectories.Nodes.Add(node);
-                }
-            }
-        }
-
         private void treeViewDirectories_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
             TreeNode node = e.Node;
@@ -177,79 +256,10 @@ namespace CustomFileExplorer
             LoadFiles(selectedPath);
         }
 
-        private void LoadFiles(string path)
+
+        private void ChangeListViewMode(View viewMode)
         {
-            if (!string.IsNullOrEmpty(currentPath))
-            {
-                navigationHistory.Push(currentPath); // Store the previous path
-            }
-
-            currentPath = path; // Update current path
-            listViewFiles.Items.Clear();
-
-            try
-            {
-                foreach (var dir in Directory.GetDirectories(path))
-                {
-                    ListViewItem item = new ListViewItem(Path.GetFileName(dir), 0);
-                    item.Tag = dir;
-                    item.SubItems.Add("");
-                    item.SubItems.Add("Folder");
-
-                    int specialIconIndex = GetSpecialFolderIconIndex(dir);
-                    if (specialIconIndex != -1)
-                        item.ImageIndex = specialIconIndex;
-
-                    listViewFiles.Items.Add(item);
-                }
-
-                foreach (var file in Directory.GetFiles(path))
-                {
-                    FileInfo fileInfo = new FileInfo(file);
-                    string ext = fileInfo.Extension.ToLower();
-
-                    int iconIndex = GetFileIconIndex(ext);
-                    ListViewItem item = new ListViewItem(fileInfo.Name, iconIndex);
-                    item.Tag = file;
-                    item.SubItems.Add(fileInfo.Length.ToString("N0") + " bytes");
-                    item.SubItems.Add(fileInfo.Extension.ToUpper() + " File");
-                    listViewFiles.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading files: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void GoBack()
-        {
-            if (navigationHistory.Count > 0)
-            {
-                string previousPath = navigationHistory.Pop();
-                LoadFiles(previousPath);
-            }
-            else
-            {
-                MessageBox.Show("No previous directory to go back to.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-
-
-
-        private void btnGo_Click(object sender, EventArgs e)
-        {
-            string path = textBoxPath.Text;
-            if (Directory.Exists(path))
-            {
-                LoadFiles(path);
-                HighlightTreeViewPath(path);
-            }
-            else
-            {
-                MessageBox.Show("Invalid Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            listViewFiles.View = viewMode;
         }
 
         private void HighlightTreeViewPath(string path)
@@ -264,8 +274,7 @@ namespace CustomFileExplorer
                 }
             }
         }
-
-
+        
         private Dictionary<string, int> iconCache = new Dictionary<string, int>();
 
         private int GetFileIconIndex(string extension)
@@ -293,7 +302,41 @@ namespace CustomFileExplorer
             return index;
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e) // I sadly cannot rename this without breaking the whole app apart - it's for openContextMenu_Click
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // UI click events
+
+        private void btnGo_Click(object sender, EventArgs e)
+        {
+            string path = textBoxPath.Text;
+            if (Directory.Exists(path))
+            {
+                LoadFiles(path);
+                HighlightTreeViewPath(path);
+            }
+            else
+            {
+                MessageBox.Show("Invalid Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e) // openContextMenu_Click
         {
             openFileFolder();
         }
@@ -345,8 +388,152 @@ namespace CustomFileExplorer
             new_Folder();
         }
 
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            GoBack();
+        }
+
+        private void textBoxPath_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnQuickAccessDocuments_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+        private void btnQuickAccessDesktop_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+        private void btnQuickAccessImages_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+        private void btnQuickAccessVideos_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+        private void btnQuickAccessMusic_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+        private void listViewFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNewFolder_Click(object sender, EventArgs e)
+        {
+            new_Folder();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            deleteFileFolder();
+        }
+
+        private void button1_Click(object sender, EventArgs e) // btnRename_Click
+        {
+            init_rename();
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("to be implemented");
+        }
+
+        private void btnCut_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("to be implemented");
+        }
+
+        private void btnPaste_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("to be implemented");
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            openFileFolder();
+        }
+
+        private void btnDetailsView_Click(object sender, EventArgs e)
+        {
+            ChangeListViewMode(View.Details);
+        }
+
+        private void btnLargeView_Click(object sender, EventArgs e)
+        {
+            ChangeListViewMode(View.LargeIcon);
+        }
+
+        private void btnExtract_Click(object sender, EventArgs e)
+        {
+            ExtractZipFile();
+        }
 
 
+
+
+
+
+
+
+        // file handling
+
+        private void ExtractZipFile()
+        {
+            if (listViewFiles.SelectedItems.Count == 0) return;
+
+            string zipPath = listViewFiles.SelectedItems[0].Tag.ToString();
+            if (!File.Exists(zipPath) || Path.GetExtension(zipPath).ToLower() != ".zip")
+            {
+                MessageBox.Show("Please select a valid ZIP file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string extractFolderPath = Path.Combine(Path.GetDirectoryName(zipPath), Path.GetFileNameWithoutExtension(zipPath));
+
+            try
+            {
+                if (Directory.Exists(extractFolderPath))
+                {
+                    MessageBox.Show("A folder with the same name already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                Directory.CreateDirectory(extractFolderPath);
+                ZipFile.ExtractToDirectory(zipPath, extractFolderPath);
+                LoadFiles(Path.GetDirectoryName(zipPath)); // Refresh the view
+
+                MessageBox.Show("ZIP file extracted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error extracting ZIP file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
 
         private void openFileFolder()
@@ -429,6 +616,12 @@ namespace CustomFileExplorer
 
 
 
+
+
+
+        // Icons
+
+
         private Dictionary<string, int> specialFolderIcons = new Dictionary<string, int>();
 
         private int GetSpecialFolderIconIndex(string folderPath)
@@ -465,114 +658,20 @@ namespace CustomFileExplorer
             return Icon.FromHandle(shinfo.hIcon);
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            GoBack();
-        }
-
-        private void textBoxPath_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-
-        
-
-
-        private void btnQuickAccessDocuments_Click(object sender, EventArgs e)
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            textBoxPath.Text = path;
-            LoadFiles(path);
-            HighlightTreeViewPath(path);
-        }
-
-        private void btnQuickAccessDesktop_Click(object sender, EventArgs e)
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            textBoxPath.Text = path;
-            LoadFiles(path);
-            HighlightTreeViewPath(path);
-        }
-
-        private void btnQuickAccessImages_Click(object sender, EventArgs e)
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            textBoxPath.Text = path;
-            LoadFiles(path);
-            HighlightTreeViewPath(path);
-        }
-
-        private void btnQuickAccessVideos_Click(object sender, EventArgs e)
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
-            textBoxPath.Text = path;
-            LoadFiles(path);
-            HighlightTreeViewPath(path);
-        }
-
-        private void btnQuickAccessMusic_Click(object sender, EventArgs e)
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-            textBoxPath.Text = path;
-            LoadFiles(path);
-            HighlightTreeViewPath(path);
-        }
-
-
-
-
-        private void listViewFiles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
 
 
 
 
-
-        private void btnNewFolder_Click(object sender, EventArgs e)
-        {
-            new_Folder();
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            deleteFileFolder();
-        }
-
-        private void button1_Click(object sender, EventArgs e) // btnRename_Click
-        {
-
-        }
-
-        private void btnCopy_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnCut_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnPaste_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnOpen_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 
 
 }
 
+
+
+
+// WinAPI class for icons
 public class WinAPI
 {
     [StructLayout(LayoutKind.Sequential)]

@@ -50,6 +50,8 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnNewFolder = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnLargeView = new System.Windows.Forms.Button();
+            this.btnDetailsView = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnGo = new System.Windows.Forms.Button();
@@ -65,6 +67,8 @@
             this.contextMenuFiles_Rename = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuFiles_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.imageListIcons = new System.Windows.Forms.ImageList(this.components);
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btnExtract = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -73,8 +77,10 @@
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.contextMenuFiles.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -209,6 +215,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -221,6 +228,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
             this.tabPage1.Controls.Add(this.btnOpen);
             this.tabPage1.Controls.Add(this.btnRename);
             this.tabPage1.Controls.Add(this.btnPaste);
@@ -234,12 +242,11 @@
             this.tabPage1.Size = new System.Drawing.Size(676, 56);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "File";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // btnOpen
             // 
             this.btnOpen.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnOpen.Location = new System.Drawing.Point(297, 4);
+            this.btnOpen.Location = new System.Drawing.Point(297, 3);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(92, 50);
             this.btnOpen.TabIndex = 10;
@@ -309,6 +316,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnLargeView);
+            this.tabPage2.Controls.Add(this.btnDetailsView);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -316,6 +325,26 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "View";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnLargeView
+            // 
+            this.btnLargeView.Location = new System.Drawing.Point(3, 30);
+            this.btnLargeView.Name = "btnLargeView";
+            this.btnLargeView.Size = new System.Drawing.Size(92, 23);
+            this.btnLargeView.TabIndex = 13;
+            this.btnLargeView.Text = "Large";
+            this.btnLargeView.UseVisualStyleBackColor = true;
+            this.btnLargeView.Click += new System.EventHandler(this.btnLargeView_Click);
+            // 
+            // btnDetailsView
+            // 
+            this.btnDetailsView.Location = new System.Drawing.Point(3, 3);
+            this.btnDetailsView.Name = "btnDetailsView";
+            this.btnDetailsView.Size = new System.Drawing.Size(92, 23);
+            this.btnDetailsView.TabIndex = 12;
+            this.btnDetailsView.Text = "Details";
+            this.btnDetailsView.UseVisualStyleBackColor = true;
+            this.btnDetailsView.Click += new System.EventHandler(this.btnDetailsView_Click);
             // 
             // tabPage3
             // 
@@ -373,6 +402,7 @@
             // 
             this.listViewFiles.ContextMenuStrip = this.contextMenuFiles;
             this.listViewFiles.Dock = System.Windows.Forms.DockStyle.Top;
+            this.listViewFiles.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listViewFiles.HideSelection = false;
             this.listViewFiles.LabelEdit = true;
             this.listViewFiles.Location = new System.Drawing.Point(0, 0);
@@ -453,6 +483,26 @@
             this.imageListIcons.ImageSize = new System.Drawing.Size(16, 16);
             this.imageListIcons.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.btnExtract);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(676, 56);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Extract";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // btnExtract
+            // 
+            this.btnExtract.Location = new System.Drawing.Point(3, 3);
+            this.btnExtract.Name = "btnExtract";
+            this.btnExtract.Size = new System.Drawing.Size(92, 23);
+            this.btnExtract.TabIndex = 17;
+            this.btnExtract.Text = "Extract .zip";
+            this.btnExtract.UseVisualStyleBackColor = true;
+            this.btnExtract.Click += new System.EventHandler(this.btnExtract_Click);
+            // 
             // CustomFileExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -471,9 +521,11 @@
             this.panel3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.contextMenuFiles.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -503,19 +555,23 @@
         private System.Windows.Forms.Button btnQuickAccessImages;
         private System.Windows.Forms.Button btnQuickAccessDocuments;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnNewFolder;
-        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.Button btnRename;
         private System.Windows.Forms.Button btnPaste;
         private System.Windows.Forms.Button btnCut;
         private System.Windows.Forms.Button btnCopy;
-        private System.Windows.Forms.Button btnRename;
-        private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnNewFolder;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Button btnDetailsView;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button btnLargeView;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button btnExtract;
     }
 }
 
