@@ -24,9 +24,14 @@ namespace CustomFileExplorer
 {
     public partial class CustomFileExplorer: Form
     {
+        private Stack<string> navigationHistory = new Stack<string>();
+        private string currentPath = "";
+
+
         public CustomFileExplorer()
         {
             InitializeComponent();
+            listViewFiles.MouseDoubleClick += ListViewFiles_MouseDoubleClick;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -76,26 +81,60 @@ namespace CustomFileExplorer
 
         private void listViewFiles_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            if (e.Label == null) return; // if no change
+            if (e.Label == null) return;
+
 
             string oldPath = listViewFiles.Items[e.Item].Tag.ToString();
             string newPath = Path.Combine(Path.GetDirectoryName(oldPath), e.Label);
 
+
             try
             {
                 if (Directory.Exists(oldPath))
+                {
                     Directory.Move(oldPath, newPath);
+                }
                 else if (File.Exists(oldPath))
+                {
                     File.Move(oldPath, newPath);
+                }
+                else
+                {
+                    MessageBox.Show($"File/Directory not found:\n{oldPath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
+                listViewFiles.Items[e.Item].Text = e.Label;
                 listViewFiles.Items[e.Item].Tag = newPath;
+
+                LoadFiles(Path.GetDirectoryName(newPath));
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error renaming: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error renaming: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.CancelEdit = true;
             }
         }
+
+
+        private void ListViewFiles_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listViewFiles.SelectedItems.Count == 0) return;
+
+            string path = listViewFiles.SelectedItems[0].Tag.ToString();
+
+            if (Directory.Exists(path))
+            {
+                textBoxPath.Text = path;
+                LoadFiles(path);
+                HighlightTreeViewPath(path);
+            }
+            else if (File.Exists(path))
+            {
+                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+            }
+        }
+
 
 
         private void LoadDrives()
@@ -140,16 +179,27 @@ namespace CustomFileExplorer
 
         private void LoadFiles(string path)
         {
+            if (!string.IsNullOrEmpty(currentPath))
+            {
+                navigationHistory.Push(currentPath); // Store the previous path
+            }
+
+            currentPath = path; // Update current path
             listViewFiles.Items.Clear();
 
             try
             {
                 foreach (var dir in Directory.GetDirectories(path))
                 {
-                    ListViewItem item = new ListViewItem(Path.GetFileName(dir), 0); // Folder icon
+                    ListViewItem item = new ListViewItem(Path.GetFileName(dir), 0);
                     item.Tag = dir;
                     item.SubItems.Add("");
                     item.SubItems.Add("Folder");
+
+                    int specialIconIndex = GetSpecialFolderIconIndex(dir);
+                    if (specialIconIndex != -1)
+                        item.ImageIndex = specialIconIndex;
+
                     listViewFiles.Items.Add(item);
                 }
 
@@ -166,8 +216,26 @@ namespace CustomFileExplorer
                     listViewFiles.Items.Add(item);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading files: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        private void GoBack()
+        {
+            if (navigationHistory.Count > 0)
+            {
+                string previousPath = navigationHistory.Pop();
+                LoadFiles(previousPath);
+            }
+            else
+            {
+                MessageBox.Show("No previous directory to go back to.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+
 
 
         private void btnGo_Click(object sender, EventArgs e)
@@ -225,24 +293,9 @@ namespace CustomFileExplorer
             return index;
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e) // I sadly cannot rename this without breaking the whole app apart
+        private void toolStripMenuItem1_Click(object sender, EventArgs e) // I sadly cannot rename this without breaking the whole app apart - it's for openContextMenu_Click
         {
-            {
-                if (listViewFiles.SelectedItems.Count == 0) return;
-
-                string path = listViewFiles.SelectedItems[0].Tag.ToString();
-
-                if (Directory.Exists(path))
-                {
-                    textBoxPath.Text = path;
-                    LoadFiles(path);
-                    HighlightTreeViewPath(path);
-                }
-                else if (File.Exists(path))
-                {
-                    Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
-                }
-            }
+            openFileFolder();
         }
 
         private void contextMenuFiles_Copy_Click(object sender, EventArgs e)
@@ -279,35 +332,48 @@ namespace CustomFileExplorer
 
         private void contextMenuFiles_Delete_Click(object sender, EventArgs e)
         {
-            if (listViewFiles.SelectedItems.Count == 0) return;
-
-            string path = listViewFiles.SelectedItems[0].Tag.ToString();
-            if (MessageBox.Show("Are you sure you want to delete this?", "Confirm",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-            {
-                try
-                {
-                    if (Directory.Exists(path))
-                        Directory.Delete(path, true);
-                    else if (File.Exists(path))
-                        File.Delete(path);
-
-                    LoadFiles(textBoxPath.Text);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error deleting file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            deleteFileFolder();
         }
 
         private void contextMenuFiles_Rename_Click(object sender, EventArgs e)
+        {
+            init_rename();
+        }
+
+        private void contextMenuFiles_NewFolder_Click(object sender, EventArgs e)
+        {
+            new_Folder();
+        }
+
+
+
+
+
+        private void openFileFolder()
+        {
+            if (listViewFiles.SelectedItems.Count == 0) return;
+
+            string path = listViewFiles.SelectedItems[0].Tag.ToString();
+
+            if (Directory.Exists(path))
+            {
+                textBoxPath.Text = path;
+                LoadFiles(path);
+                HighlightTreeViewPath(path);
+            }
+            else if (File.Exists(path))
+            {
+                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+            }
+        }
+
+        private void init_rename()
         {
             if (listViewFiles.SelectedItems.Count == 0) return;
             listViewFiles.SelectedItems[0].BeginEdit();
         }
 
-        private void contextMenuFiles_NewFolder_Click(object sender, EventArgs e)
+        private void new_Folder()
         {
             string currentPath = textBoxPath.Text;
             if (string.IsNullOrEmpty(currentPath) || !Directory.Exists(currentPath))
@@ -336,6 +402,172 @@ namespace CustomFileExplorer
             }
         }
 
+        private void deleteFileFolder()
+        {
+            if (listViewFiles.SelectedItems.Count == 0) return;
+
+            string path = listViewFiles.SelectedItems[0].Tag.ToString();
+            if (MessageBox.Show("Are you sure you want to delete this?", "Confirm",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                try
+                {
+                    if (Directory.Exists(path))
+                        Directory.Delete(path, true);
+                    else if (File.Exists(path))
+                        File.Delete(path);
+
+                    LoadFiles(textBoxPath.Text);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
+
+
+        private Dictionary<string, int> specialFolderIcons = new Dictionary<string, int>();
+
+        private int GetSpecialFolderIconIndex(string folderPath)
+        {
+            string[] specialFolders = 
+                {
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Environment.GetFolderPath(Environment.SpecialFolder.MyPictures),
+                Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),
+                Environment.GetFolderPath(Environment.SpecialFolder.MyVideos),
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                };
+
+            if (specialFolders.Contains(folderPath) && !specialFolderIcons.ContainsKey(folderPath))
+            {
+                Icon folderIcon = ExtractFolderIcon(folderPath);
+                imageListIcons.Images.Add(folderPath, folderIcon);
+                specialFolderIcons[folderPath] = imageListIcons.Images.Count - 1;
+            }
+
+            return specialFolderIcons.ContainsKey(folderPath) ? specialFolderIcons[folderPath] : -1;
+        }
+
+        private Icon ExtractFolderIcon(string folderPath)
+        {
+            IntPtr hIcon = WinAPI.SHGetFileInfo(
+                folderPath,
+                0,
+                out WinAPI.SHFILEINFO shinfo,
+                (uint)Marshal.SizeOf(typeof(WinAPI.SHFILEINFO)),
+                WinAPI.SHGFI_ICON | WinAPI.SHGFI_LARGEICON
+            );
+
+            return Icon.FromHandle(shinfo.hIcon);
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            GoBack();
+        }
+
+        private void textBoxPath_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
+        
+
+
+        private void btnQuickAccessDocuments_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+        private void btnQuickAccessDesktop_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+        private void btnQuickAccessImages_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+        private void btnQuickAccessVideos_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+        private void btnQuickAccessMusic_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
+
+
+
+
+        private void listViewFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
+
+
+        private void btnNewFolder_Click(object sender, EventArgs e)
+        {
+            new_Folder();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            deleteFileFolder();
+        }
+
+        private void button1_Click(object sender, EventArgs e) // btnRename_Click
+        {
+
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCut_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPaste_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 

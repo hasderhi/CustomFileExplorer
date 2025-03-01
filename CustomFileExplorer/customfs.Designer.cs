@@ -30,8 +30,30 @@
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnQuickAccessDesktop = new System.Windows.Forms.Button();
+            this.btnQuickAccessMusic = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnQuickAccessVideos = new System.Windows.Forms.Button();
+            this.btnQuickAccessImages = new System.Windows.Forms.Button();
+            this.btnQuickAccessDocuments = new System.Windows.Forms.Button();
             this.treeViewDirectories = new System.Windows.Forms.TreeView();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnOpen = new System.Windows.Forms.Button();
+            this.btnRename = new System.Windows.Forms.Button();
+            this.btnPaste = new System.Windows.Forms.Button();
+            this.btnCut = new System.Windows.Forms.Button();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnNewFolder = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.btnGo = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
             this.textBoxPath = new System.Windows.Forms.TextBox();
             this.listViewFiles = new System.Windows.Forms.ListView();
             this.contextMenuFiles = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -47,6 +69,11 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.contextMenuFiles.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,57 +85,304 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.panel2);
             this.splitContainer1.Panel1.Controls.Add(this.treeViewDirectories);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.btnGo);
-            this.splitContainer1.Panel2.Controls.Add(this.textBoxPath);
+            this.splitContainer1.Panel2.Controls.Add(this.panel3);
+            this.splitContainer1.Panel2.Controls.Add(this.panel1);
             this.splitContainer1.Panel2.Controls.Add(this.listViewFiles);
-            this.splitContainer1.Size = new System.Drawing.Size(940, 450);
+            this.splitContainer1.Size = new System.Drawing.Size(940, 493);
             this.splitContainer1.SplitterDistance = 252;
             this.splitContainer1.TabIndex = 0;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.btnQuickAccessDesktop);
+            this.panel2.Controls.Add(this.btnQuickAccessMusic);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.btnQuickAccessVideos);
+            this.panel2.Controls.Add(this.btnQuickAccessImages);
+            this.panel2.Controls.Add(this.btnQuickAccessDocuments);
+            this.panel2.Location = new System.Drawing.Point(0, 246);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(252, 248);
+            this.panel2.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(203, 150);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 19);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "v1.0.1";
+            // 
+            // btnQuickAccessDesktop
+            // 
+            this.btnQuickAccessDesktop.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
+            this.btnQuickAccessDesktop.Location = new System.Drawing.Point(0, 29);
+            this.btnQuickAccessDesktop.Name = "btnQuickAccessDesktop";
+            this.btnQuickAccessDesktop.Size = new System.Drawing.Size(252, 23);
+            this.btnQuickAccessDesktop.TabIndex = 5;
+            this.btnQuickAccessDesktop.Text = "Desktop";
+            this.btnQuickAccessDesktop.UseVisualStyleBackColor = true;
+            this.btnQuickAccessDesktop.Click += new System.EventHandler(this.btnQuickAccessDesktop_Click);
+            // 
+            // btnQuickAccessMusic
+            // 
+            this.btnQuickAccessMusic.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
+            this.btnQuickAccessMusic.Location = new System.Drawing.Point(0, 117);
+            this.btnQuickAccessMusic.Name = "btnQuickAccessMusic";
+            this.btnQuickAccessMusic.Size = new System.Drawing.Size(252, 23);
+            this.btnQuickAccessMusic.TabIndex = 4;
+            this.btnQuickAccessMusic.Text = "Music";
+            this.btnQuickAccessMusic.UseVisualStyleBackColor = true;
+            this.btnQuickAccessMusic.Click += new System.EventHandler(this.btnQuickAccessMusic_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(3, 143);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(208, 28);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "CustomFileExplorer";
+            // 
+            // btnQuickAccessVideos
+            // 
+            this.btnQuickAccessVideos.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
+            this.btnQuickAccessVideos.Location = new System.Drawing.Point(0, 88);
+            this.btnQuickAccessVideos.Name = "btnQuickAccessVideos";
+            this.btnQuickAccessVideos.Size = new System.Drawing.Size(252, 23);
+            this.btnQuickAccessVideos.TabIndex = 3;
+            this.btnQuickAccessVideos.Text = "Videos";
+            this.btnQuickAccessVideos.UseVisualStyleBackColor = true;
+            this.btnQuickAccessVideos.Click += new System.EventHandler(this.btnQuickAccessVideos_Click);
+            // 
+            // btnQuickAccessImages
+            // 
+            this.btnQuickAccessImages.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
+            this.btnQuickAccessImages.Location = new System.Drawing.Point(0, 59);
+            this.btnQuickAccessImages.Name = "btnQuickAccessImages";
+            this.btnQuickAccessImages.Size = new System.Drawing.Size(252, 23);
+            this.btnQuickAccessImages.TabIndex = 2;
+            this.btnQuickAccessImages.Text = "Images";
+            this.btnQuickAccessImages.UseVisualStyleBackColor = true;
+            this.btnQuickAccessImages.Click += new System.EventHandler(this.btnQuickAccessImages_Click);
+            // 
+            // btnQuickAccessDocuments
+            // 
+            this.btnQuickAccessDocuments.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuickAccessDocuments.Location = new System.Drawing.Point(0, 0);
+            this.btnQuickAccessDocuments.Name = "btnQuickAccessDocuments";
+            this.btnQuickAccessDocuments.Size = new System.Drawing.Size(252, 23);
+            this.btnQuickAccessDocuments.TabIndex = 0;
+            this.btnQuickAccessDocuments.Text = "Documents";
+            this.btnQuickAccessDocuments.UseVisualStyleBackColor = true;
+            this.btnQuickAccessDocuments.Click += new System.EventHandler(this.btnQuickAccessDocuments_Click);
+            // 
             // treeViewDirectories
             // 
-            this.treeViewDirectories.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDirectories.Dock = System.Windows.Forms.DockStyle.Top;
             this.treeViewDirectories.Location = new System.Drawing.Point(0, 0);
             this.treeViewDirectories.Name = "treeViewDirectories";
-            this.treeViewDirectories.Size = new System.Drawing.Size(252, 450);
+            this.treeViewDirectories.Size = new System.Drawing.Size(252, 245);
             this.treeViewDirectories.TabIndex = 0;
             this.treeViewDirectories.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewDirectories_BeforeExpand);
             this.treeViewDirectories.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewDirectories_AfterSelect);
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.tabControl1);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(0, 409);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(684, 93);
+            this.panel3.TabIndex = 5;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControl1.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(684, 85);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.btnOpen);
+            this.tabPage1.Controls.Add(this.btnRename);
+            this.tabPage1.Controls.Add(this.btnPaste);
+            this.tabPage1.Controls.Add(this.btnCut);
+            this.tabPage1.Controls.Add(this.btnCopy);
+            this.tabPage1.Controls.Add(this.btnDelete);
+            this.tabPage1.Controls.Add(this.btnNewFolder);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(676, 56);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "File";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnOpen.Location = new System.Drawing.Point(297, 4);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(92, 50);
+            this.btnOpen.TabIndex = 10;
+            this.btnOpen.Text = "Open";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
+            // btnRename
+            // 
+            this.btnRename.Location = new System.Drawing.Point(199, 29);
+            this.btnRename.Name = "btnRename";
+            this.btnRename.Size = new System.Drawing.Size(92, 24);
+            this.btnRename.TabIndex = 9;
+            this.btnRename.Text = "Rename";
+            this.btnRename.UseVisualStyleBackColor = true;
+            this.btnRename.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnPaste
+            // 
+            this.btnPaste.Location = new System.Drawing.Point(199, 4);
+            this.btnPaste.Name = "btnPaste";
+            this.btnPaste.Size = new System.Drawing.Size(92, 23);
+            this.btnPaste.TabIndex = 8;
+            this.btnPaste.Text = "Paste";
+            this.btnPaste.UseVisualStyleBackColor = true;
+            this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
+            // 
+            // btnCut
+            // 
+            this.btnCut.Location = new System.Drawing.Point(101, 29);
+            this.btnCut.Name = "btnCut";
+            this.btnCut.Size = new System.Drawing.Size(92, 24);
+            this.btnCut.TabIndex = 7;
+            this.btnCut.Text = "Cut";
+            this.btnCut.UseVisualStyleBackColor = true;
+            this.btnCut.Click += new System.EventHandler(this.btnCut_Click);
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.Location = new System.Drawing.Point(101, 3);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(92, 24);
+            this.btnCopy.TabIndex = 6;
+            this.btnCopy.Text = "Copy";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(3, 29);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(92, 24);
+            this.btnDelete.TabIndex = 5;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnNewFolder
+            // 
+            this.btnNewFolder.Location = new System.Drawing.Point(3, 3);
+            this.btnNewFolder.Name = "btnNewFolder";
+            this.btnNewFolder.Size = new System.Drawing.Size(92, 24);
+            this.btnNewFolder.TabIndex = 4;
+            this.btnNewFolder.Text = "New Folder";
+            this.btnNewFolder.UseVisualStyleBackColor = true;
+            this.btnNewFolder.Click += new System.EventHandler(this.btnNewFolder_Click);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(676, 56);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "View";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(676, 56);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Options";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnGo);
+            this.panel1.Controls.Add(this.btnBack);
+            this.panel1.Controls.Add(this.textBoxPath);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 386);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(684, 23);
+            this.panel1.TabIndex = 4;
+            // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(592, 0);
+            this.btnGo.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
+            this.btnGo.Location = new System.Drawing.Point(609, 0);
             this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new System.Drawing.Size(92, 20);
+            this.btnGo.Size = new System.Drawing.Size(75, 24);
             this.btnGo.TabIndex = 2;
             this.btnGo.Text = "Go";
             this.btnGo.UseVisualStyleBackColor = true;
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
+            // btnBack
+            // 
+            this.btnBack.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.Location = new System.Drawing.Point(0, 0);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(89, 24);
+            this.btnBack.TabIndex = 3;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // textBoxPath
             // 
-            this.textBoxPath.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBoxPath.Location = new System.Drawing.Point(0, 0);
+            this.textBoxPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxPath.Location = new System.Drawing.Point(88, 1);
             this.textBoxPath.Name = "textBoxPath";
-            this.textBoxPath.Size = new System.Drawing.Size(684, 20);
+            this.textBoxPath.Size = new System.Drawing.Size(521, 22);
             this.textBoxPath.TabIndex = 1;
+            this.textBoxPath.TextChanged += new System.EventHandler(this.textBoxPath_TextChanged);
             // 
             // listViewFiles
             // 
             this.listViewFiles.ContextMenuStrip = this.contextMenuFiles;
-            this.listViewFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewFiles.Dock = System.Windows.Forms.DockStyle.Top;
             this.listViewFiles.HideSelection = false;
             this.listViewFiles.LabelEdit = true;
             this.listViewFiles.Location = new System.Drawing.Point(0, 0);
             this.listViewFiles.Name = "listViewFiles";
-            this.listViewFiles.Size = new System.Drawing.Size(684, 450);
+            this.listViewFiles.Size = new System.Drawing.Size(684, 386);
             this.listViewFiles.TabIndex = 0;
             this.listViewFiles.UseCompatibleStateImageBehavior = false;
             this.listViewFiles.View = System.Windows.Forms.View.Details;
+            this.listViewFiles.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listViewFiles_AfterLabelEdit);
+            this.listViewFiles.SelectedIndexChanged += new System.EventHandler(this.listViewFiles_SelectedIndexChanged);
             // 
             // contextMenuFiles
             // 
@@ -183,16 +457,22 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(940, 450);
+            this.ClientSize = new System.Drawing.Size(940, 493);
             this.Controls.Add(this.splitContainer1);
             this.Name = "CustomFileExplorer";
             this.Text = "CustomFileExplorer";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.contextMenuFiles.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -214,6 +494,28 @@
         private System.Windows.Forms.ToolStripMenuItem contextMenuFiles_Delete;
         private System.Windows.Forms.ToolStripMenuItem contextMenuFiles_Rename;
         private System.Windows.Forms.ToolStripMenuItem contextMenuFiles_NewFolder;
+        private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnQuickAccessDesktop;
+        private System.Windows.Forms.Button btnQuickAccessMusic;
+        private System.Windows.Forms.Button btnQuickAccessVideos;
+        private System.Windows.Forms.Button btnQuickAccessImages;
+        private System.Windows.Forms.Button btnQuickAccessDocuments;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnNewFolder;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnPaste;
+        private System.Windows.Forms.Button btnCut;
+        private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnRename;
+        private System.Windows.Forms.Button btnOpen;
     }
 }
 
