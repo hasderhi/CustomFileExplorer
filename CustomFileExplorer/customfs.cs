@@ -36,6 +36,10 @@ namespace CustomFileExplorer
         {
             InitializeComponent();
             listViewFiles.MouseDoubleClick += ListViewFiles_MouseDoubleClick;
+            btnSearch.Click += btnSearch_Click;
+
+
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -99,12 +103,15 @@ namespace CustomFileExplorer
 
             try
             {
+                // Load Folders
                 foreach (var dir in Directory.GetDirectories(path))
                 {
+                    DirectoryInfo dirInfo = new DirectoryInfo(dir);
                     ListViewItem item = new ListViewItem(Path.GetFileName(dir), 0);
                     item.Tag = dir;
-                    item.SubItems.Add("");
+                    item.SubItems.Add(""); // Placeholder for file size (folders don't have sizes)
                     item.SubItems.Add("Folder");
+                    item.SubItems.Add(dirInfo.LastWriteTime.ToString()); // Last modified date
 
                     int specialIconIndex = GetSpecialFolderIconIndex(dir);
                     if (specialIconIndex != -1)
@@ -113,6 +120,7 @@ namespace CustomFileExplorer
                     listViewFiles.Items.Add(item);
                 }
 
+                // Load Files
                 foreach (var file in Directory.GetFiles(path))
                 {
                     FileInfo fileInfo = new FileInfo(file);
@@ -121,8 +129,9 @@ namespace CustomFileExplorer
                     int iconIndex = GetFileIconIndex(ext);
                     ListViewItem item = new ListViewItem(fileInfo.Name, iconIndex);
                     item.Tag = file;
-                    item.SubItems.Add(fileInfo.Length.ToString("N0") + " bytes");
-                    item.SubItems.Add(fileInfo.Extension.ToUpper() + " File");
+                    item.SubItems.Add(fileInfo.Length.ToString("N0") + " bytes"); // File size
+                    item.SubItems.Add(fileInfo.Extension.ToUpper() + " File");   // File type
+                    item.SubItems.Add(fileInfo.LastWriteTime.ToString()); // Last modified date
                     listViewFiles.Items.Add(item);
                 }
             }
@@ -132,6 +141,7 @@ namespace CustomFileExplorer
                 GoBack();
             }
         }
+
 
         private void GoBack()
         {
@@ -171,6 +181,7 @@ namespace CustomFileExplorer
             listViewFiles.Columns.Add("Name", 250);
             listViewFiles.Columns.Add("Size", 100);
             listViewFiles.Columns.Add("Type", 150);
+            listViewFiles.Columns.Add("Last Modified", 150);
             listViewFiles.FullRowSelect = true;
         }
 
@@ -438,6 +449,11 @@ namespace CustomFileExplorer
             HighlightTreeViewPath(path);
         }
 
+
+
+
+
+
         private void listViewFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -494,7 +510,36 @@ namespace CustomFileExplorer
         }
 
 
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Custom File Explorer\n " +
+                $"\nCreated by Tobias Kisling\n" +
+                $"Copyright (c) 2023-2025 Tobias Kisling ('tk_dev','hasderhi')\n " +
+                $"\nThis is my very basic implementation of a file explorer\n" +
+                $"in C# using the .NET WFS. Mostly a playground for me to practice C#.\n " +
+                $"\nFound a bug or want a feature? Let me know by contacting me on\n" +
+                $"Github (/hasderhi) or by sending an email to tobias.kisling@icloud.com!\n " +
+                $"\nVersion 1.0.3", "Information / About this application", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            SearchFilesAndFolders(textBoxSearch.Text);
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            string path = textBoxPath.Text;
+            if (Directory.Exists(path))
+            {
+                LoadFiles(path);
+                HighlightTreeViewPath(path);
+            }
+            else
+            {
+                MessageBox.Show("Invalid Path!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
 
 
@@ -613,7 +658,72 @@ namespace CustomFileExplorer
             }
         }
 
+        private void SearchFilesAndFolders(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query) || string.IsNullOrWhiteSpace(currentPath))
+            {
+                LoadFiles(currentPath); // Reset to full directory listing if query is empty
+                return;
+            }
 
+            listViewFiles.Items.Clear(); // Clear existing items
+
+            try
+            {
+                // Search directories
+                foreach (var dir in Directory.GetDirectories(currentPath))
+                {
+                    if (Path.GetFileName(dir).IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        ListViewItem item = new ListViewItem(Path.GetFileName(dir), 0)
+                        {
+                            Tag = dir
+                        };
+                        item.SubItems.Add("");
+                        item.SubItems.Add("Folder");
+
+                        int specialIconIndex = GetSpecialFolderIconIndex(dir);
+                        if (specialIconIndex != -1)
+                            item.ImageIndex = specialIconIndex;
+
+                        listViewFiles.Items.Add(item);
+                    }
+                }
+
+                // Search files
+                foreach (var file in Directory.GetFiles(currentPath))
+                {
+                    FileInfo fileInfo = new FileInfo(file);
+                    if (fileInfo.Name.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        int iconIndex = GetFileIconIndex(fileInfo.Extension);
+                        ListViewItem item = new ListViewItem(fileInfo.Name, iconIndex)
+                        {
+                            Tag = file
+                        };
+                        item.SubItems.Add(fileInfo.Length.ToString("N0") + " bytes");
+                        item.SubItems.Add(fileInfo.Extension.ToUpper() + " File");
+                        listViewFiles.Items.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error searching files: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RevealInExplorer(string filePath)
+        {
+            if (File.Exists(filePath) || Directory.Exists(filePath))
+            {
+                Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+            }
+            else
+            {
+                MessageBox.Show("File not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
 
 
@@ -658,7 +768,26 @@ namespace CustomFileExplorer
             return Icon.FromHandle(shinfo.hIcon);
         }
 
+        private void btnReveilInExplorer_Click(object sender, EventArgs e)
+        {
+            if (listViewFiles.SelectedItems.Count > 0)
+            {
+                string selectedPath = listViewFiles.SelectedItems[0].Tag.ToString();
+                RevealInExplorer(selectedPath);
+            }
+            else
+            {
+                MessageBox.Show("Please select a file or folder first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
 
+        private void btnQuickAccessPersonal_Click(object sender, EventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
+            textBoxPath.Text = path;
+            LoadFiles(path);
+            HighlightTreeViewPath(path);
+        }
     }
 
 

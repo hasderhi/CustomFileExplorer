@@ -29,19 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomFileExplorer));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnQuickAccessPersonal = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btnQuickAccessDesktop = new System.Windows.Forms.Button();
             this.btnQuickAccessMusic = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnQuickAccessVideos = new System.Windows.Forms.Button();
-            this.btnQuickAccessImages = new System.Windows.Forms.Button();
             this.btnQuickAccessDocuments = new System.Windows.Forms.Button();
+            this.btnQuickAccessImages = new System.Windows.Forms.Button();
             this.treeViewDirectories = new System.Windows.Forms.TreeView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnReveilInExplorer = new System.Windows.Forms.Button();
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnRename = new System.Windows.Forms.Button();
             this.btnPaste = new System.Windows.Forms.Button();
@@ -49,10 +52,18 @@
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnNewFolder = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnLargeView = new System.Windows.Forms.Button();
             this.btnDetailsView = new System.Windows.Forms.Button();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btnExtract = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnReload = new System.Windows.Forms.Button();
+            this.btnInfo = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnGo = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
@@ -67,8 +78,6 @@
             this.contextMenuFiles_Rename = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuFiles_NewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.imageListIcons = new System.Windows.Forms.ImageList(this.components);
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.btnExtract = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -77,10 +86,12 @@
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.contextMenuFiles.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -105,47 +116,68 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnQuickAccessPersonal);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.btnQuickAccessDesktop);
             this.panel2.Controls.Add(this.btnQuickAccessMusic);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.btnQuickAccessVideos);
-            this.panel2.Controls.Add(this.btnQuickAccessImages);
             this.panel2.Controls.Add(this.btnQuickAccessDocuments);
+            this.panel2.Controls.Add(this.btnQuickAccessImages);
             this.panel2.Location = new System.Drawing.Point(0, 246);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(252, 248);
             this.panel2.TabIndex = 1;
             // 
+            // btnQuickAccessPersonal
+            // 
+            this.btnQuickAccessPersonal.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuickAccessPersonal.Image = ((System.Drawing.Image)(resources.GetObject("btnQuickAccessPersonal.Image")));
+            this.btnQuickAccessPersonal.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnQuickAccessPersonal.Location = new System.Drawing.Point(107, 117);
+            this.btnQuickAccessPersonal.Name = "btnQuickAccessPersonal";
+            this.btnQuickAccessPersonal.Size = new System.Drawing.Size(91, 50);
+            this.btnQuickAccessPersonal.TabIndex = 8;
+            this.btnQuickAccessPersonal.Text = "Recent files";
+            this.btnQuickAccessPersonal.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnQuickAccessPersonal.UseVisualStyleBackColor = true;
+            this.btnQuickAccessPersonal.Click += new System.EventHandler(this.btnQuickAccessPersonal_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(203, 150);
+            this.label2.Location = new System.Drawing.Point(203, 224);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(46, 19);
             this.label2.TabIndex = 7;
-            this.label2.Text = "v1.0.1";
+            this.label2.Text = "v1.0.3";
             // 
             // btnQuickAccessDesktop
             // 
             this.btnQuickAccessDesktop.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
-            this.btnQuickAccessDesktop.Location = new System.Drawing.Point(0, 29);
+            this.btnQuickAccessDesktop.Image = ((System.Drawing.Image)(resources.GetObject("btnQuickAccessDesktop.Image")));
+            this.btnQuickAccessDesktop.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnQuickAccessDesktop.Location = new System.Drawing.Point(106, 5);
             this.btnQuickAccessDesktop.Name = "btnQuickAccessDesktop";
-            this.btnQuickAccessDesktop.Size = new System.Drawing.Size(252, 23);
+            this.btnQuickAccessDesktop.Size = new System.Drawing.Size(92, 50);
             this.btnQuickAccessDesktop.TabIndex = 5;
             this.btnQuickAccessDesktop.Text = "Desktop";
+            this.btnQuickAccessDesktop.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnQuickAccessDesktop.UseVisualStyleBackColor = true;
             this.btnQuickAccessDesktop.Click += new System.EventHandler(this.btnQuickAccessDesktop_Click);
             // 
             // btnQuickAccessMusic
             // 
             this.btnQuickAccessMusic.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
-            this.btnQuickAccessMusic.Location = new System.Drawing.Point(0, 117);
+            this.btnQuickAccessMusic.Image = ((System.Drawing.Image)(resources.GetObject("btnQuickAccessMusic.Image")));
+            this.btnQuickAccessMusic.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnQuickAccessMusic.Location = new System.Drawing.Point(106, 61);
             this.btnQuickAccessMusic.Name = "btnQuickAccessMusic";
-            this.btnQuickAccessMusic.Size = new System.Drawing.Size(252, 23);
+            this.btnQuickAccessMusic.Size = new System.Drawing.Size(92, 50);
             this.btnQuickAccessMusic.TabIndex = 4;
             this.btnQuickAccessMusic.Text = "Music";
+            this.btnQuickAccessMusic.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnQuickAccessMusic.UseVisualStyleBackColor = true;
             this.btnQuickAccessMusic.Click += new System.EventHandler(this.btnQuickAccessMusic_Click);
             // 
@@ -153,7 +185,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 143);
+            this.label1.Location = new System.Drawing.Point(3, 217);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(208, 28);
             this.label1.TabIndex = 6;
@@ -162,35 +194,44 @@
             // btnQuickAccessVideos
             // 
             this.btnQuickAccessVideos.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
-            this.btnQuickAccessVideos.Location = new System.Drawing.Point(0, 88);
+            this.btnQuickAccessVideos.Image = ((System.Drawing.Image)(resources.GetObject("btnQuickAccessVideos.Image")));
+            this.btnQuickAccessVideos.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnQuickAccessVideos.Location = new System.Drawing.Point(8, 117);
             this.btnQuickAccessVideos.Name = "btnQuickAccessVideos";
-            this.btnQuickAccessVideos.Size = new System.Drawing.Size(252, 23);
+            this.btnQuickAccessVideos.Size = new System.Drawing.Size(92, 50);
             this.btnQuickAccessVideos.TabIndex = 3;
             this.btnQuickAccessVideos.Text = "Videos";
+            this.btnQuickAccessVideos.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnQuickAccessVideos.UseVisualStyleBackColor = true;
             this.btnQuickAccessVideos.Click += new System.EventHandler(this.btnQuickAccessVideos_Click);
-            // 
-            // btnQuickAccessImages
-            // 
-            this.btnQuickAccessImages.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
-            this.btnQuickAccessImages.Location = new System.Drawing.Point(0, 59);
-            this.btnQuickAccessImages.Name = "btnQuickAccessImages";
-            this.btnQuickAccessImages.Size = new System.Drawing.Size(252, 23);
-            this.btnQuickAccessImages.TabIndex = 2;
-            this.btnQuickAccessImages.Text = "Images";
-            this.btnQuickAccessImages.UseVisualStyleBackColor = true;
-            this.btnQuickAccessImages.Click += new System.EventHandler(this.btnQuickAccessImages_Click);
             // 
             // btnQuickAccessDocuments
             // 
             this.btnQuickAccessDocuments.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQuickAccessDocuments.Location = new System.Drawing.Point(0, 0);
+            this.btnQuickAccessDocuments.Image = ((System.Drawing.Image)(resources.GetObject("btnQuickAccessDocuments.Image")));
+            this.btnQuickAccessDocuments.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnQuickAccessDocuments.Location = new System.Drawing.Point(8, 5);
             this.btnQuickAccessDocuments.Name = "btnQuickAccessDocuments";
-            this.btnQuickAccessDocuments.Size = new System.Drawing.Size(252, 23);
+            this.btnQuickAccessDocuments.Size = new System.Drawing.Size(92, 50);
             this.btnQuickAccessDocuments.TabIndex = 0;
             this.btnQuickAccessDocuments.Text = "Documents";
+            this.btnQuickAccessDocuments.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnQuickAccessDocuments.UseVisualStyleBackColor = true;
             this.btnQuickAccessDocuments.Click += new System.EventHandler(this.btnQuickAccessDocuments_Click);
+            // 
+            // btnQuickAccessImages
+            // 
+            this.btnQuickAccessImages.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
+            this.btnQuickAccessImages.Image = ((System.Drawing.Image)(resources.GetObject("btnQuickAccessImages.Image")));
+            this.btnQuickAccessImages.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnQuickAccessImages.Location = new System.Drawing.Point(8, 61);
+            this.btnQuickAccessImages.Name = "btnQuickAccessImages";
+            this.btnQuickAccessImages.Size = new System.Drawing.Size(92, 50);
+            this.btnQuickAccessImages.TabIndex = 2;
+            this.btnQuickAccessImages.Text = "Images";
+            this.btnQuickAccessImages.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnQuickAccessImages.UseVisualStyleBackColor = true;
+            this.btnQuickAccessImages.Click += new System.EventHandler(this.btnQuickAccessImages_Click);
             // 
             // treeViewDirectories
             // 
@@ -214,6 +255,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -229,6 +271,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.btnReveilInExplorer);
             this.tabPage1.Controls.Add(this.btnOpen);
             this.tabPage1.Controls.Add(this.btnRename);
             this.tabPage1.Controls.Add(this.btnPaste);
@@ -243,20 +286,38 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "File";
             // 
+            // btnReveilInExplorer
+            // 
+            this.btnReveilInExplorer.Image = ((System.Drawing.Image)(resources.GetObject("btnReveilInExplorer.Image")));
+            this.btnReveilInExplorer.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnReveilInExplorer.Location = new System.Drawing.Point(398, 5);
+            this.btnReveilInExplorer.Name = "btnReveilInExplorer";
+            this.btnReveilInExplorer.Size = new System.Drawing.Size(92, 49);
+            this.btnReveilInExplorer.TabIndex = 11;
+            this.btnReveilInExplorer.Text = "Open in WE";
+            this.btnReveilInExplorer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnReveilInExplorer.UseVisualStyleBackColor = true;
+            this.btnReveilInExplorer.Click += new System.EventHandler(this.btnReveilInExplorer_Click);
+            // 
             // btnOpen
             // 
             this.btnOpen.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnOpen.Location = new System.Drawing.Point(297, 3);
+            this.btnOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnOpen.Image")));
+            this.btnOpen.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnOpen.Location = new System.Drawing.Point(6, 4);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(92, 50);
             this.btnOpen.TabIndex = 10;
             this.btnOpen.Text = "Open";
+            this.btnOpen.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // btnRename
             // 
-            this.btnRename.Location = new System.Drawing.Point(199, 29);
+            this.btnRename.Image = ((System.Drawing.Image)(resources.GetObject("btnRename.Image")));
+            this.btnRename.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRename.Location = new System.Drawing.Point(496, 6);
             this.btnRename.Name = "btnRename";
             this.btnRename.Size = new System.Drawing.Size(92, 24);
             this.btnRename.TabIndex = 9;
@@ -266,7 +327,9 @@
             // 
             // btnPaste
             // 
-            this.btnPaste.Location = new System.Drawing.Point(199, 4);
+            this.btnPaste.Image = ((System.Drawing.Image)(resources.GetObject("btnPaste.Image")));
+            this.btnPaste.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPaste.Location = new System.Drawing.Point(202, 30);
             this.btnPaste.Name = "btnPaste";
             this.btnPaste.Size = new System.Drawing.Size(92, 23);
             this.btnPaste.TabIndex = 8;
@@ -276,7 +339,9 @@
             // 
             // btnCut
             // 
-            this.btnCut.Location = new System.Drawing.Point(101, 29);
+            this.btnCut.Image = ((System.Drawing.Image)(resources.GetObject("btnCut.Image")));
+            this.btnCut.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCut.Location = new System.Drawing.Point(300, 4);
             this.btnCut.Name = "btnCut";
             this.btnCut.Size = new System.Drawing.Size(92, 24);
             this.btnCut.TabIndex = 7;
@@ -286,7 +351,9 @@
             // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(101, 3);
+            this.btnCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnCopy.Image")));
+            this.btnCopy.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCopy.Location = new System.Drawing.Point(202, 4);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(92, 24);
             this.btnCopy.TabIndex = 6;
@@ -296,7 +363,9 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(3, 29);
+            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
+            this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDelete.Location = new System.Drawing.Point(300, 29);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(92, 24);
             this.btnDelete.TabIndex = 5;
@@ -306,13 +375,57 @@
             // 
             // btnNewFolder
             // 
-            this.btnNewFolder.Location = new System.Drawing.Point(3, 3);
+            this.btnNewFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnNewFolder.Image")));
+            this.btnNewFolder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnNewFolder.Location = new System.Drawing.Point(104, 4);
             this.btnNewFolder.Name = "btnNewFolder";
-            this.btnNewFolder.Size = new System.Drawing.Size(92, 24);
+            this.btnNewFolder.Size = new System.Drawing.Size(92, 50);
             this.btnNewFolder.TabIndex = 4;
             this.btnNewFolder.Text = "New Folder";
+            this.btnNewFolder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnNewFolder.UseVisualStyleBackColor = true;
             this.btnNewFolder.Click += new System.EventHandler(this.btnNewFolder_Click);
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.label3);
+            this.tabPage5.Controls.Add(this.btnSearch);
+            this.tabPage5.Controls.Add(this.textBoxSearch);
+            this.tabPage5.Location = new System.Drawing.Point(4, 25);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(676, 56);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Search";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 8);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(148, 20);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Search files/folders";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
+            this.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSearch.Location = new System.Drawing.Point(403, 31);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(92, 22);
+            this.btnSearch.TabIndex = 12;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // textBoxSearch
+            // 
+            this.textBoxSearch.Location = new System.Drawing.Point(7, 31);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(395, 22);
+            this.textBoxSearch.TabIndex = 0;
             // 
             // tabPage2
             // 
@@ -328,26 +441,57 @@
             // 
             // btnLargeView
             // 
-            this.btnLargeView.Location = new System.Drawing.Point(3, 30);
+            this.btnLargeView.Image = ((System.Drawing.Image)(resources.GetObject("btnLargeView.Image")));
+            this.btnLargeView.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnLargeView.Location = new System.Drawing.Point(101, 3);
             this.btnLargeView.Name = "btnLargeView";
-            this.btnLargeView.Size = new System.Drawing.Size(92, 23);
+            this.btnLargeView.Size = new System.Drawing.Size(92, 50);
             this.btnLargeView.TabIndex = 13;
             this.btnLargeView.Text = "Large";
+            this.btnLargeView.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnLargeView.UseVisualStyleBackColor = true;
             this.btnLargeView.Click += new System.EventHandler(this.btnLargeView_Click);
             // 
             // btnDetailsView
             // 
+            this.btnDetailsView.Image = ((System.Drawing.Image)(resources.GetObject("btnDetailsView.Image")));
+            this.btnDetailsView.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnDetailsView.Location = new System.Drawing.Point(3, 3);
             this.btnDetailsView.Name = "btnDetailsView";
-            this.btnDetailsView.Size = new System.Drawing.Size(92, 23);
+            this.btnDetailsView.Size = new System.Drawing.Size(92, 50);
             this.btnDetailsView.TabIndex = 12;
             this.btnDetailsView.Text = "Details";
+            this.btnDetailsView.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnDetailsView.UseVisualStyleBackColor = true;
             this.btnDetailsView.Click += new System.EventHandler(this.btnDetailsView_Click);
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.btnExtract);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(676, 56);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Extract";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // btnExtract
+            // 
+            this.btnExtract.Image = ((System.Drawing.Image)(resources.GetObject("btnExtract.Image")));
+            this.btnExtract.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnExtract.Location = new System.Drawing.Point(3, 3);
+            this.btnExtract.Name = "btnExtract";
+            this.btnExtract.Size = new System.Drawing.Size(92, 50);
+            this.btnExtract.TabIndex = 17;
+            this.btnExtract.Text = "Extract .zip";
+            this.btnExtract.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnExtract.UseVisualStyleBackColor = true;
+            this.btnExtract.Click += new System.EventHandler(this.btnExtract_Click);
+            // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnReload);
+            this.tabPage3.Controls.Add(this.btnInfo);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -355,6 +499,30 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Options";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnReload
+            // 
+            this.btnReload.Image = ((System.Drawing.Image)(resources.GetObject("btnReload.Image")));
+            this.btnReload.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReload.Location = new System.Drawing.Point(101, 3);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(92, 24);
+            this.btnReload.TabIndex = 20;
+            this.btnReload.Text = "Reload";
+            this.btnReload.UseVisualStyleBackColor = true;
+            // 
+            // btnInfo
+            // 
+            this.btnInfo.Image = ((System.Drawing.Image)(resources.GetObject("btnInfo.Image")));
+            this.btnInfo.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnInfo.Location = new System.Drawing.Point(3, 3);
+            this.btnInfo.Name = "btnInfo";
+            this.btnInfo.Size = new System.Drawing.Size(92, 50);
+            this.btnInfo.TabIndex = 19;
+            this.btnInfo.Text = "Information";
+            this.btnInfo.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnInfo.UseVisualStyleBackColor = true;
+            this.btnInfo.Click += new System.EventHandler(this.btnInfo_Click);
             // 
             // panel1
             // 
@@ -370,6 +538,8 @@
             // btnGo
             // 
             this.btnGo.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F);
+            this.btnGo.Image = ((System.Drawing.Image)(resources.GetObject("btnGo.Image")));
+            this.btnGo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGo.Location = new System.Drawing.Point(609, 0);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(75, 24);
@@ -381,6 +551,8 @@
             // btnBack
             // 
             this.btnBack.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
+            this.btnBack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnBack.Location = new System.Drawing.Point(0, 0);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(89, 24);
@@ -392,9 +564,9 @@
             // textBoxPath
             // 
             this.textBoxPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPath.Location = new System.Drawing.Point(88, 1);
+            this.textBoxPath.Location = new System.Drawing.Point(89, 1);
             this.textBoxPath.Name = "textBoxPath";
-            this.textBoxPath.Size = new System.Drawing.Size(521, 22);
+            this.textBoxPath.Size = new System.Drawing.Size(520, 22);
             this.textBoxPath.TabIndex = 1;
             this.textBoxPath.TextChanged += new System.EventHandler(this.textBoxPath_TextChanged);
             // 
@@ -483,32 +655,13 @@
             this.imageListIcons.ImageSize = new System.Drawing.Size(16, 16);
             this.imageListIcons.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.btnExtract);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(676, 56);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Extract";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // btnExtract
-            // 
-            this.btnExtract.Location = new System.Drawing.Point(3, 3);
-            this.btnExtract.Name = "btnExtract";
-            this.btnExtract.Size = new System.Drawing.Size(92, 23);
-            this.btnExtract.TabIndex = 17;
-            this.btnExtract.Text = "Extract .zip";
-            this.btnExtract.UseVisualStyleBackColor = true;
-            this.btnExtract.Click += new System.EventHandler(this.btnExtract_Click);
-            // 
             // CustomFileExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(940, 493);
             this.Controls.Add(this.splitContainer1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "CustomFileExplorer";
             this.Text = "CustomFileExplorer";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -521,11 +674,14 @@
             this.panel3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.contextMenuFiles.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -572,6 +728,14 @@
         private System.Windows.Forms.Button btnLargeView;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button btnExtract;
+        private System.Windows.Forms.Button btnInfo;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnReload;
+        private System.Windows.Forms.Button btnReveilInExplorer;
+        private System.Windows.Forms.Button btnQuickAccessPersonal;
     }
 }
 
