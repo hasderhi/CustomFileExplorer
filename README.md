@@ -1,6 +1,6 @@
 # CustomFileExplorer
 
-## A custom file explorer written C-sharp
+## A custom file explorer written in C-sharp
 
 This is my very basic implementation of a custom file explorer in C#. It allows users to browse through their files and directories, create new folders, copy/paste/cut/rename files and folders, and delete files and folders.
 
